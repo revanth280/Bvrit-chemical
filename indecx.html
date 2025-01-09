@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alchemiz Quiz</title>
+    <link rel="stylesheet" href="styles.css">
+    <script defer src="script.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Welcome to Alchemiz Quiz</h1>
+        <p>B v raju institue of tehnology</p>
+        <p>IICHE student chapter & AICHE student chapter -BVRITN </p>
+        <p>Test your Chemical Engineering skills with an exciting trivia quiz!</p>
+    </header>
+
+    <main>
+        <section id="welcome-section">
+            <form id="user-info-form">
+                <h2>Enter Your Details</h2>
+                <label for="Name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+               <label for="college">College:</label>
+<input type="text" id="college" name="college" required placeholder="Enter your college name">
+
+<label for="branch">Branch:</label>
+<input type="text" id="branch" name="branch" required placeholder="Enter your branch">
+
+                <label for="year">Year of Study:</label>
+                <select id="year" name="year" required>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4">4th Year</option>
+                </select>
+
+
+
+                <button type="button" id="start-quiz-btn">Start Quiz</button>
+            </form>
+        </section>
+
+        <section id="instructions-section" class="hidden">
+            <h2>Game Instructions</h2>
+            <ul>
+                <li>The quiz consists of multiple-choice questions related to Chemical Engineering fundamentals.</li>
+                <li>A timer will start as soon as you begin the quiz. You must answer within the allotted time.</li>
+                <li>Select the correct answer for each question to score points.</li>
+                <li>Once you complete all the questions, your score will be displayed.</li>
+                <li>Have fun and give it your best shot!</li>
+            </ul>
+            <button id="proceed-btn">Proceed to Quiz</button>
+        </section>
+
+        <section id="quiz-section" class="hidden">
+            <div id="timer">Time Remaining: <span id="time-left">60</span> seconds</div>
+            <div id="question-container">
+                <h2 id="question"></h2>
+                <ul id="answers">
+                    <!-- Options will be dynamically inserted here -->
+                </ul>
+                <button id="next-btn" class="hidden">Next</button>
+            </div>
+        </section>
+
+        <section id="result-section" class="hidden">
+            <h2>Quiz Completed!</h2>
+            <p id="score">Your Score: </p>
+            <button id="share-btn">Share Results</button>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Alchemiz Quiz by IIChE BVRIT Student Chapter</p>
+    </footer>
+</body>
+</html>
+
+<!-- styles.css -->
+<style>
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #ffebee, #e3f2fd);
+    color: #333;
+}
+header {
+    background: #8e24aa;
+    color: white;
+    padding: 1em 0;
+    text-align: center;
+    font-size: 1.2em;
+}
+main {
+    padding: 1em;
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+h1 {
+    font-size: 2em;
+    margin-bottom: 0.5em;
+}
+.hidden {
+    display: none;
+}
+#timer {
+    font-size: 1.2em;
+    color: #d32f2f;
+    margin-bottom: 1em;
+    text-align: right;
+}
+#question {
+    font-size: 1.5em;
+    margin-bottom: 1em;
+}
+#answers li {
+    margin: 0.5em 0;
+    list-style: none;
+    background: #bbdefb;
+    padding: 0.5em;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+#answers li:hover {
+    background: #90caf9;
+}
+button {
+    background: #1565c0;
+    color: white;
+    border: none;
+    padding: 0.7em 1.2em;
+    border-radius: 4px;
+    cursor: pointer;
+}
+button:hover {
+    background: #003c8f;
+}
+footer {
+    text-align: center;
+    padding: 1em 0;
+    background: #8e24aa;
+    color: white;
+}
+ul {
+    padding: 0;
+}
+</style>
+
+<!-- script.js -->
+<script>
+const userInfoForm = document.getElementById("user-info-form");
+const startQuizBtn = document.getElementById("start-quiz-btn");
+const instructionsSection = document.getElementById("instructions-section");
+const proceedBtn = document.getElementById("proceed-btn");
+const quizSection = document.getElementById("quiz-section");
+const questionEl = document.getElementById("question");
+const answersEl = document.getElementById("answers");
+const nextBtn = document.getElementById("next-btn");
+const resultSection = document.getElementById("result-section");
+const scoreEl = document.getElementById("score");
+const timerEl = document.getElementById("time-left");
+
+let currentQuestionIndex = 0;
+let score = 0;
+let timeLeft = 60;
+const questions = [
+    {
+        question: "What is the SI unit of viscosity?",
+        answers: ["Pascal-second", "N/m²", "kg/m³", "m²/s"],
+        correct: 0
+    },
+    {
+        question: "Heat transfer due to bulk motion of fluid is called?",
+        answers: ["Conduction", "Convection", "Radiation", "None of these"],
+        correct: 1
+    },
+        {
+            question: "Which of the following describes a property of fluids?", 
+            answers: ["Hardness", "Density", "Electrical resistance","Melting point"],
+            correct: 1 
+   },
+      {
+           question: "What is the definition of fluid?",  
+           answers: ["A solid that can change shape", "A substance that can flow and take the shape of its container", "A mixture of gases     and solids", "Any material that is incompressible"], 
+          correct: 1 
+   },
+      {
+         question: "What is the typical Reynolds number range that distinguishes laminar flow, transition flow and turbulent flow in a fluid flow?", 
+         answers: ["Less than 2000 for laminar, greater than 4000 for turbulent", "Less than 20000 for laminar, 20000 - 40000 for transition and greater than 40000 for turbulent", "Less than 2000 for laminar, 2000 - 4000 for transition and greater than 4000 for turbulent flow", "Less than 1000 for laminar, greater than 5000 for turbulent"],
+        correct: 0
+   },
+      {
+          question: "What is the primary focus of chemical engineering?", 
+          answers: ["Designing buildings", "Developing new materials", "Transforming raw materials into useful products", "Operating machinery"],
+           correct: 2
+  },
+      {
+          question: "What is the term for the resistance of a fluid to flow?", 
+          answers: ["Viscosity", "Density", "Pressure", "Temperature"], 
+          correct: 0 
+ },
+      {  
+         question: "Which equation relates the pressure, density, and height of a fluid column?", 
+         answers: ["Bernoulli’s equation", "Pascal’s principle", "Hydrostatic pressure equation", "Continuity equation"],
+         correct: 2 
+ },
+      { 
+         question: "Which of the following is the SI unit for pressure?",
+         answers: ["Pascal", "Bar", "Torr", "Atmosphere"],
+         correct: 0 
+ },
+      { 
+         question: "What is the main purpose of a catalyst in a chemical reaction?", 
+         answers: ["To increase the temperature", "To speed up the reaction without being consumed", "To change the products", "To absorb energy"], 
+         correct: 1 
+ },
+      { 
+        question: "Which term describes a reaction that absorbs heat from its surroundings?",
+        answers: ["Exothermic", "Endothermic", "Isothermal", "Adiabatic"], 
+        correct: 1
+ },
+      { 
+        question: "Which unit is commonly used to measure Temperature?",
+        answers: ["Newton", "Joule", "Celsius", "Liter"], 
+        correct: 2
+ },
+      { 
+        question: "In a material balance, what is the main purpose of applying a steady-state assumption?", 
+        answers: ["To simplify calculations by assuming no accumulation of mass", "To account for time-dependent changes", "To consider energy losses", "To define the reaction kinetics"],
+        correct: 0
+ },
+      { 
+        question: "Which statement most accurately describes the effect of temperature on the rate of a chemical reaction?",
+        answers: ["Increasing temperature always increases the reaction rate", "The reaction rate can be described by the Arrhenius equation", "Temperature has no effect on reaction kinetics", "Higher temperatures lead to lower equilibrium constants"], 
+        correct: 1 
+},
+      { 
+         question: "In the context of chemical engineering Mathematics, which of the following is most crucial for solving differential equations related to reaction kinetics?", 
+         answers: ["Initial conditions", "Boundary conditions", "The order of the reaction", "Rate Constant (K)"],
+         correct: 0 
+},
+      { 
+        question: "What is the most common type of heat exchanger used variously in industries?",
+        answers: ["Shell and tube", "Double Pipe", "Plate", "All of the above"],
+        correct: 3 
+},
+      { 
+         question: "In Material Balance calculations, the term “input” refers to:", 
+         answers: ["Material entering a system", "Material leaving a system", "Material stored in a system", "None of the above"],            correct: 0 
+},
+      { 
+         question: "In the context of Chemical Reaction Engineering, which of the following factors is most crucial for understanding and modeling the kinetics of chemical reactions?",
+        answers: ["Reaction rate Expression", "Reaction Mechanism", "Activation energy", "Catalyst concentration"], 
+        correct: 0 
+},
+      { 
+          question: "Which of the following is the primary mode of heat transfer in a solid?",
+         answers: ["Conduction", "Convection", "Radiation", "Phase Change"], 
+       correct: 0 
+},
+      {
+          question: "Which of the following factors has the most significant impact on increasing the rate of heat transfer by convection?", 
+          answers: ["Increasing fluid velocity", "Increasing the surface area of the heat exchanger", "Increasing the temperature difference between the fluid and the surface", "Using a fluid with higher thermal conductivity"], 
+         correct: 0
+  },
+    
+];
+
+function showInstructions() {
+    userInfoForm.classList.add("hidden");
+    instructionsSection.classList.remove("hidden");
+}
+
+function proceedToQuiz() {
+    instructionsSection.classList.add("hidden");
+    quizSection.classList.remove("hidden");
+    loadQuestion();
+    startTimer();
+}
+
+function loadQuestion() {
+    const currentQuestion = questions[currentQuestionIndex];
+    questionEl.textContent = currentQuestion.question;
+    answersEl.innerHTML = "";
+    currentQuestion.answers.forEach((answer, index) => {
+        const li = document.createElement("li");
+        li.textContent = answer;
+        li.addEventListener("click", () => selectAnswer(index));
+        answersEl.appendChild(li);
+    });
+}
+
+function selectAnswer(selectedIndex) {
+    const currentQuestion = questions[currentQuestionIndex];
+    if (selectedIndex === currentQuestion.correct) {
+        score++;
+    }
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        loadQuestion();
+    } else {
+        endQuiz();
+    }
+}
+
+function startTimer() {
+    const timerInterval = setInterval(() => {
+        timeLeft--;
+        timerEl.textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(timerInterval);
+            endQuiz();
+        }
+    }, 1000);
+}
+
+function endQuiz() {
+    quizSection.classList.add("hidden");
+    resultSection.classList.remove("hidden");
+    scoreEl.textContent = `Your Score: ${score} / ${questions.length}`;
+}
+
+startQuizBtn.addEventListener("click", showInstructions);
+proceedBtn.addEventListener("click", proceedToQuiz);
+</script>
