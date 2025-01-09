@@ -80,14 +80,17 @@
 
 <!-- styles.css -->
 <style>
+/* General styles */
 body {
     font-family: Arial, sans-serif;
-    margin: 0 auto;
+    margin: 0;
     padding: 20px;
     background: linear-gradient(to right, #ffebee, #e3f2fd);
-    font-size:1.5rem ;
+    font-size: 1.5rem;
     color: #333;
+    box-sizing: border-box;
 }
+
 header {
     background: #8e24aa;
     color: white;
@@ -95,6 +98,7 @@ header {
     text-align: center;
     font-size: 1.2em;
 }
+
 main {
     padding: 1em;
     max-width: 800px;
@@ -103,23 +107,28 @@ main {
     border-radius: 10px;
     box-shadow: 0 5px 8px rgba(0, 0, 0, 0.1);
 }
+
 h1 {
     font-size: 2em;
     margin-bottom: 0.5em;
 }
+
 .hidden {
     display: none;
 }
+
 #timer {
     font-size: 1.2em;
     color: #d32f2f;
     margin-bottom: 1em;
     text-align: right;
 }
+
 #question {
     font-size: 1.5em;
     margin-bottom: 2em;
 }
+
 #answers li {
     margin: 0.5em 0;
     list-style: none;
@@ -129,9 +138,11 @@ h1 {
     cursor: pointer;
     transition: background 0.3s;
 }
+
 #answers li:hover {
     background: #90caf9;
 }
+
 button {
     background: #1565c0;
     color: white;
@@ -140,18 +151,78 @@ button {
     border-radius: 4px;
     cursor: pointer;
 }
+
 button:hover {
     background: #003c8f;
 }
+
 footer {
     text-align: center;
     padding: 1em 0;
     background: #8e24aa;
     color: white;
 }
+
+/* Default settings for all screen sizes */
 ul {
     padding: 0;
 }
+
+/* Responsive design for smaller screens */
+@media (max-width: 768px) {
+    body {
+        font-size: 1.2rem;
+        padding: 10px;
+    }
+
+    main {
+        padding: 1em;
+        max-width: 100%;
+        margin: 0 auto;
+        box-shadow: none;
+        border-radius: 0;
+    }
+
+    #question {
+        font-size: 1.3em;
+    }
+
+    #answers li {
+        font-size: 1.1em;
+        padding: 0.4em;
+    }
+
+    button {
+        font-size: 1em;
+        padding: 0.5em 1em;
+    }
+}
+
+/* Larger screens */
+@media (min-width: 1024px) {
+    body {
+        font-size: 1.5rem;
+    }
+
+    main {
+        padding: 2em;
+        max-width: 900px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+    }
+
+    #question {
+        font-size: 1.7em;
+    }
+
+    #answers li {
+        font-size: 1.3em;
+        padding: 0.7em;
+    }
+}
+
 </style>
 
 <!-- script.js -->
